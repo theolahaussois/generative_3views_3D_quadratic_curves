@@ -10,7 +10,7 @@ import torchvision.transforms as T  # pour resize et conversion en tenseur
 # --- DATASET ---
 class QuadraticSurfaceDataset(Dataset):
     """
-    Dataset PyTorch pour charger les images 3 vues d'une surface quadratique
+    Dataset PyTorch pour charger les images 3 vues
     - Chaque exemple contient trois images : top, front, side
     - Chaque exemple contient les 7 coefficients correspondants
     """
@@ -24,7 +24,7 @@ class QuadraticSurfaceDataset(Dataset):
         with open(self.csv_path, newline="") as f:
             reader = csv.DictReader(f)
             for row in reader:
-                prefix = row["prefix"]  # nom unique pour chaque exemple
+                prefix = row["prefix"]  # nom pour chaque exemple
                 coeffs = [float(row[k]) for k in ["a","b","c","d","e","f","g"]]  # récupération coefficients
                 self.samples.append((prefix, coeffs))  # ajout à la liste des exemples
 
@@ -57,7 +57,7 @@ class QuadraticSurfaceDataset(Dataset):
 # --- SPLIT ---
 def split_dataset(ds: Dataset, train=0.8, val=0.1, test=0.1, seed=0):
     """
-    Sépare un dataset PyTorch en train / validation / test
+    Sépare un dataset en train / validation / test
     - ds : dataset complet
     - train, val, test : fractions
     - seed : reproductibilité
