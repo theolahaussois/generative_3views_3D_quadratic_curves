@@ -1,21 +1,26 @@
 # Génération de surfaces quadratiques en 3 vues
 
-Ce projet implémente des modèles **MLP** et **CNN** en PyTorch pour générer **3 vues RGB** (`top`, `front`, `side`) d'une surface quadratique définie par 7 coefficients.
+Ce projet implémente des modèles **MLP** et **CNN** en **PyTorch** pour générer **3 vues RGB** (`top`, `front`, `side`) d'une surface quadratique définie par **7 coefficients**.
 
 ---
 
-## Structure du repo
+## Structure du dépôt
 
-├── CNN.py # Générateur CNN
-├── MLP.py # Générateur MLP
-├── datasets.py # Dataset PyTorch (images + coefficients)
-├── imageutils.py # Génération du dataset synthétique
-├── main.py # Script principal (train / infer)
-├── images_entraînement/ # Dataset généré (images + dataset.csv)
-├── images_gen/ # Résultats des inférences
-└── best_model.pt # Modèle sauvegardé (Git LFS si >100Mo)
+| Fichier / Dossier      | Description                                                                        |
+| ---------------------- | ---------------------------------------------------------------------------------- |
+| `MLP.py`               | Définition du **MLP** pour générer les 3 vues                                        |
+| `CNN.py`               | Définition du **CNN** pour générer les 3 vues                                        |
+| `datasets.py`          | Dataset PyTorch pour les surfaces quadratiques et fonction de split train/val/test |
+| `imageutils.py`        | Fonctions pour générer les surfaces et créer le dataset                              |
+| `main.py`              | Script **CLI** pour lancer l’entraînement ou l’inférence                             |
+| `images_entrainement/` | Images utilisées pour l’entraînement                                               |
+| `images_gen/`          | Images générées par le modèle à partir de coefficients                             |
+| `best_model.pt`        | Modèle **MLP** entraîné avec **2000 images** de taille 64×64                       |
+| `requirements.txt`     | Dépendances Python nécessaires au projet                                           |
+| `checkpoints/`         | Checkpoints d’entraînement intermédiaires                                          |
+| `__pycache__/`         | Cache Python (à ignorer dans Git)                                                  |
 
-### Le fichier `best_model.pt` actuel correspond à un **MLP entraîné sur 2000 surfaces** avec des images de taille **64x64**.
+Le fichier `best_model.pt` correspond à un **MLP entraîné sur 2000 surfaces** avec des images de taille **64x64**.
 
 ---
 
@@ -23,14 +28,17 @@ Ce projet implémente des modèles **MLP** et **CNN** en PyTorch pour générer 
 
 ```bash
 git clone https://github.com/theolahaussois/generative_3views_3D_quadratic_curves.git
-cd REPO
+cd generative_3views_3D_quadratic_curves
 pip install -r requirements.txt
 ```
 
-## Entraînement 
+---
+
+## Entraînement
+
+Exemple avec un MLP :
 
 ```bash
-
 python main.py train \
     --generate \
     --n_samples 2000 \
@@ -42,8 +50,9 @@ python main.py train \
     --checkpoint best_model.pt
 ```
 
+---
 
-## Test
+## Test 
 
 ```bash
 python main.py infer \
@@ -51,3 +60,5 @@ python main.py infer \
     --coeffs 0.4 0.2 -0.1 0.1 -0.3 0.0 0.5 \
     --out prediction.png
 ```
+
+---
