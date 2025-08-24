@@ -6,7 +6,6 @@ import numpy as np
 from PIL import Image
 
 import matplotlib
-matplotlib.use('Agg')  # mode sans affichage graphique
 import matplotlib.pyplot as plt
 
 # --- SURFACE ---
@@ -31,7 +30,7 @@ def render_view(coeffs, elev, azim, img_size=128, grid_lim=2.0):
     ax.view_init(elev=elev, azim=azim)  # orientation caméra
     lim = (-grid_lim, grid_lim)
     ax.set_xlim(lim); ax.set_ylim(lim)
-    zpad = 0.1 * (Z.max() - Z.min() + 1e-6)  # léger padding pour Z
+    zpad = 0.1 * (Z.max() - Z.min() + 1e-6)  # léger padding pour Z pour éviter que les courbes touchent les bords
     ax.set_zlim(Z.min()-zpad, Z.max()+zpad)
 
     fig.tight_layout(pad=0)  # suppression padding autour de l'image
@@ -70,9 +69,9 @@ def generate_dataset(out_dir, n_samples=1000, img_size=128, seed=0):
             prefix = f"sample_{i:06d}"  # nom unique pour chaque exemple
 
             # génération des trois vues
-            top   = render_view(coeffs, 90, -90, img_size)   # vue du dessus
-            front = render_view(coeffs, 0, -90, img_size)    # vue frontale
-            side  = render_view(coeffs, 0,   0, img_size)    # vue de côté
+            top   = render_view(coeffs, 90, -90, img_size)   # dessus
+            front = render_view(coeffs, 0, -90, img_size)    # devant
+            side  = render_view(coeffs, 0,   0, img_size)    # côté
 
             # sauvegarde images PNG
             top.save(os.path.join(out_dir, prefix+"_top.png"))
