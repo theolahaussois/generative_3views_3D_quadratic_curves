@@ -1,10 +1,14 @@
 # Génération de surfaces quadratiques en 3 vues
 
-<img width="64" height="64" alt="sample_002868_top" src="https://github.com/user-attachments/assets/f6106502-14b9-42a4-94d4-aa1707f43508" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f6106502-14b9-42a4-94d4-aa1707f43508" alt="top view" width="128" />
+  <img src="https://github.com/user-attachments/assets/3083ee7a-bcb4-46cb-8bce-8cb0b6faafca" alt="front view" width="128" />
+  <img src="https://github.com/user-attachments/assets/55cfbf40-36c9-4473-aff1-839351b23175" alt="side view" width="128" />
+</p>
 
-<img width="64" height="64" alt="sample_002869_front" src="https://github.com/user-attachments/assets/3083ee7a-bcb4-46cb-8bce-8cb0b6faafca" />
-
-<img width="64" height="64" alt="sample_002868_side" src="https://github.com/user-attachments/assets/55cfbf40-36c9-4473-aff1-839351b23175" />
+<p align="center">
+  <strong>Top</strong> &nbsp;&nbsp;&nbsp; <strong>Front</strong> &nbsp;&nbsp;&nbsp; <strong>Side</strong>
+</p>
 
 
 
