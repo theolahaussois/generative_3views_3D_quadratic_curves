@@ -24,7 +24,10 @@ Le fichier `best_model.pt` correspond à un **MLP entraîné sur 2000 surfaces**
 
 ---
 
-## Installation
+## Installa<img width="64" height="64" alt="sample_002868_top" src="https://github.com/user-attachments/assets/f6106502-14b9-42a4-94d4-aa1707f43508" />
+tion
+<img width="64"<img width="64" height="64" alt="sample_002869_front" src="https://github.com/user-attachments/assets/3083ee7a-bcb4-46cb-8bce-8cb0b6faafca" />
+ height="64" alt="sample_002868_side" src="https://github.com/user-attachments/assets/55cfbf40-36c9-4473-aff1-839351b23175" />
 
 ```bash
 git clone https://github.com/theolahaussois/generative_3views_3D_quadratic_curves.git
