@@ -55,10 +55,10 @@ Exemple avec un MLP :
 ```bash
 python main.py train \
     --generate \
-    --n_samples 2000 \
+    --n_samples 20 \
     --img_size 64 \
-    --model cnn \
-    --epochs 10 \
+    --model mlp \
+    --epochs 2 \
     --batch_size 32 \
     --lr 1e-3 \
     --checkpoint best_model.pt

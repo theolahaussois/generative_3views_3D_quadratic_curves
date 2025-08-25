@@ -4,6 +4,8 @@
 import os, csv
 import numpy as np
 from PIL import Image
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -16,32 +18,41 @@ def eval_surface(X, Y, coeffs):
 
 # --- VUE 3D ---
 def render_view(coeffs, elev, azim, img_size=128, grid_lim=2.0):
-    n = 64  # résolution du maillage 3D
+    """
+    Génère une vue 3D d'une surface quadratique à partir des coefficients.
+    """
+    # --- maillage 3D ---
+    n = 64  # résolution
     x = np.linspace(-grid_lim, grid_lim, n)
     y = np.linspace(-grid_lim, grid_lim, n)
-    X, Y = np.meshgrid(x, y)  # création du maillage
-    Z = eval_surface(X, Y, coeffs)  # calcul des hauteurs
+    X, Y = np.meshgrid(x, y)
+    
+    # --- calcul Z ---
+    a,b,c,d,e,f,g = coeffs
+    Z = a*X**2 + b*Y**2 + c*X*Y + d*X + e*Y + f + g
 
-    fig = plt.figure(figsize=(3, 3), dpi=img_size//3)  # figure matplotlib
-    ax = fig.add_subplot(111, projection="3d")  # subplot 3D
-    ax.plot_surface(X, Y, Z, cmap="viridis", linewidth=0, antialiased=True)  
-    # surface colorée (colormap viridis)
-    ax.set_axis_off()  # suppression axes
-    ax.view_init(elev=elev, azim=azim)  # orientation caméra
+    # --- figure matplotlib ---
+    fig = plt.figure(figsize=(1,1), dpi=img_size)  # figsize*dpi = img_size pixels
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_surface(X, Y, Z, cmap='viridis', linewidth=0, antialiased=True)
+    ax.set_axis_off()
+    ax.view_init(elev=elev, azim=azim)
     lim = (-grid_lim, grid_lim)
     ax.set_xlim(lim); ax.set_ylim(lim)
-    zpad = 0.1 * (Z.max() - Z.min() + 1e-6)  # léger padding pour Z pour éviter que les courbes touchent les bords
+    zpad = 0.1 * (Z.max() - Z.min() + 1e-6)
     ax.set_zlim(Z.min()-zpad, Z.max()+zpad)
 
-    fig.tight_layout(pad=0)  # suppression padding autour de l'image
-    fig.canvas.draw()  # rasterisation figure en mémoire
-    w, h = fig.canvas.get_width_height()
-    # conversion du buffer en array numpy RGB
-    buf = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8).reshape(h, w, 3)
-    plt.close(fig)  # ferme figure pour libérer mémoire
+    fig.canvas.draw()  # rasterisation
+    # lecture buffer rendu exact
+    buf = np.array(fig.canvas.renderer.buffer_rgba())[:, :, :3]  # RGB
+    plt.close(fig)
 
-    return Image.fromarray(buf).resize((img_size, img_size), Image.BICUBIC)  
-    # conversion en image PIL et resize final
+    # --- redimensionner pour garantir la taille exacte ---
+    img = Image.fromarray(buf)
+    img = img.resize((img_size, img_size), Image.BICUBIC)
+
+    return img
+
 
 # --- GENERATION DU DATASET ---
 def generate_dataset(out_dir, n_samples=1000, img_size=128, seed=0):
